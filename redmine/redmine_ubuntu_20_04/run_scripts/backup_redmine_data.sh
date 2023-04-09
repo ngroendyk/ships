@@ -4,7 +4,7 @@
 
 # 0. Source the common-script, to pull in script vars, ect.
 active_script="YES"  # Set this so we can use the common-script properly.
-source redmine_common.sh
+source /assets/run_scripts/redmine_common.sh
 
 
 # 1. Check for workspace
