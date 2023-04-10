@@ -98,7 +98,7 @@ RUN chmod -R 777 /assets
 
 # Mod the crontab to call backup every hour.
 ## Build the crontab file to call our backup every hour at the 0th minute
-RUN echo "0 * * * * cd /assets/run_scripts && /assets/run_scripts/backup_redmine_data.sh > /dev/null 2>&1" > /etc/cron.d/backup_redmine-cron
+RUN echo "0 * * * * cd /assets/run_scripts && /assets/run_scripts/execute_and_do_backup.sh > /dev/null 2>&1" > /etc/cron.d/backup_redmine-cron
 ## Need an empty line at EOF for a valid cron-file
 RUN echo " " >> /etc/cron.d/backup_redmine-cron
 RUN chmod 777 /etc/cron.d/backup_redmine-cron
