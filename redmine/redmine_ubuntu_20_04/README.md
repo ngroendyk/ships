@@ -57,6 +57,44 @@ Now, once that `docker run` line is ran, after a couple of seconds to a minute, 
     `http://localhost/redmine`
 **Note**: I'm assuming you have no firewalls up, and you are running redmine on the same machine as you are running the browser from.
 
+# Notes on Accessing Docker image directly
+## Connecting to Docker Image
+
+Connect to the running docker container with something like this:
+```
+docker exec -it redmine_container /bin/bash
+```
+Where:
+ - the `-it` means "run the execute interactively, connecting to stdin to the TTY (terminal)"
+ - the `/bin/bash` means to run the bash command interpretter.
+
+## Starting/Stoping redmine from within Docker image
+
+**STOPING**
+
+Redmine is written in ruby (on rails), and apache starts it automatically via Passenger, so we can use Apache to handle this:
+```
+service apache2 stop
+```
+
+**STARTING**
+```
+service apache2 start
+```
+
+**LOGS**
+
+* Logs for apache3 are located in:
+```
+/var/log/apache2
+```
+
+* Logs for Redmine are located in:
+```
+/var/logs/redmine
+```
+
+
 # Notes on Saving and Seeding redmine Data
 As noted above, if the docker container dies, the data (not saved to the workspace directory) is lost. Redmine stores its data in mysql, and a non-workspace path
 within the container. I wrote a backup script that runs every hour, on the hour (I used cron to run the script), to dump the redmine dbase, and related attachment files, into a tarbal that gets saved in your workspace. You can always run this script in the container your-self if you want to (e.g, you did a bunch of changes, and want to make sure it gets backedup). To do this do:

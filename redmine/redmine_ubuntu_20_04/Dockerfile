@@ -42,6 +42,9 @@ RUN apt-get -y install apache2 libapache2-mod-passenger
 ## Need SQL. might use SQLLite since no sql server needed then
 RUN apt-get -y install mysql-server mysql-client
 
+## Need git
+RUN apt-get -y install git
+
 ## Need redmine itself. Use script to install since we need mysql up
 ## and also need to mod some file perms.
 WORKDIR /assets/build
@@ -52,7 +55,7 @@ RUN ./seed1.sh
 
 # Now update gem, and install bundler gem (Ruby specific)
 RUN gem update
-RUN gem install bundler
+RUN gem install bundler -v 2.4.22
 
 # Bug with stringio, where 2 versions get installed. this uninstalls the non-default one.
 RUN gem uninstall stringio
@@ -62,7 +65,11 @@ RUN gem uninstall stringio
 WORKDIR /usr/share/redmine
 RUN bundle clean --force
 
+
 # -- Plugin setup -- #
+WORKDIR /assets/build
+
+RUN ./setup_plugins.sh
 
 # -- Done Plugin Setup -- #
 
