@@ -13,6 +13,14 @@ cd /usr/share/redmine/public/plugin_assets
 rm empt*
 ln -s /var/cache/redmine/default/plugin_assets/redmine_drawio/
 
-# 3.0 next plugin...
+
+# 3.0 Get the MathJax Plugin
+cd /usr/share/redmine/plugins
+git clone https://github.com/mboratko/redmine_latex_mathjax.git
+cd /usr/share/redmine
+bundle install
+
+
+# 4.0 next plugin...
 
 
