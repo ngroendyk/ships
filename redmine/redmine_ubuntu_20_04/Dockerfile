@@ -24,6 +24,17 @@ COPY run_scripts .
 ## As per: https://stackoverflow.com/questions/22466255/is-it-possible-to-answer-dialog-questions-when-installing-under-docker
 # Make sure apt goes interactive by using ARG (not ENV, since ENV ends up in image, but ARG is for building only)
 ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBCONF_NONINTERACTIVE_SEEN true
+## preesed tzdata, update package index, upgrade packages and install needed software
+RUN truncate -s0 /tmp/preseed.cfg; \
+    echo "tzdata tzdata/Areas select America" >> /tmp/preseed.cfg; \
+    echo "tzdata tzdata/Zones/America select Toronto" >> /tmp/preseed.cfg; \
+    debconf-set-selections /tmp/preseed.cfg && \
+    rm -f /etc/timezone /etc/localtime && \
+    apt-get update && \
+    apt-get install -y tzdata
+
+
 
 ## Basic stuff
 RUN apt-get update
@@ -54,6 +65,7 @@ RUN ./seed1.sh
 
 
 # Now update gem, and install bundler gem (Ruby specific)
+RUN gem install nokogiri -v 1.15.6
 RUN gem update
 RUN gem install bundler -v 2.4.22
 

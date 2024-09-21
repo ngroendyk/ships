@@ -22,9 +22,12 @@ bundle install
 
 # 4.0 Do the CRM plugin
 cp -r /assets/build/plugins/redmine_contacts /usr/share/redmine/plugins
-cd /usr/share/remdine
+cd /usr/share/redmine
 bundler install
+
+service mysql start
 bundle exec rake redmine:plugins NAME=redmine_contacts RAILS_ENV=production
+service mysql stop
 
 # 5.0 next plugin...
 
