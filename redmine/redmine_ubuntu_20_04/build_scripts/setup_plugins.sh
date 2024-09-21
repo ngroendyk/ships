@@ -20,7 +20,12 @@ git clone https://github.com/mboratko/redmine_latex_mathjax.git
 cd /usr/share/redmine
 bundle install
 
+# 4.0 Do the CRM plugin
+cp -r /assets/build/plugins/redmine_contacts /usr/share/redmine/plugins
+cd /usr/share/remdine
+bundler install
+bundle exec rake redmine:plugins NAME=redmine_contacts RAILS_ENV=production
 
-# 4.0 next plugin...
+# 5.0 next plugin...
 
 
