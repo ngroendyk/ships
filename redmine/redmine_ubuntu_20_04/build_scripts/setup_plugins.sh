@@ -28,6 +28,8 @@ bundler install
 service mysql start
 bundle exec rake redmine:plugins NAME=redmine_contacts RAILS_ENV=production
 service mysql stop
+# Link in the assets to fix some styling and icons (gravitars)
+ln -s /usr/share/redmine/plugins/redmine_contacts/assets /usr/share/redmine/public/plugin_assets/redmine_contacts
 
 # 5.0 Do the Resubmission plugin (so you can pull back in tasks after some time)
 cd /usr/share/redmine/plugins
@@ -42,6 +44,4 @@ cd /usr/share/redmine
 bundle install
 
 # 7.0 next plugin
-#
-
 

@@ -118,6 +118,8 @@ RUN chmod -R 777 /assets
 # Mod the crontab to call backup every hour.
 ## Build the crontab file to call our backup every hour at the 0th minute
 RUN echo "0 * * * * cd /assets/run_scripts && /assets/run_scripts/execute_and_do_backup.sh > /dev/null 2>&1" > /etc/cron.d/backup_redmine-cron
+# This is for the resubmit plugin (we need to use rake to trigger the plugins re-check logic every day)
+RUN echo "5 0 * * * cd /usr/share/redmine && export RAILS_ENV=production; rake redmine:resubmit:resubmit_issues[1] > /dev/null 2>&1" >> /etc/cron.d/backup_redmine-cron
 ## Need an empty line at EOF for a valid cron-file
 RUN echo " " >> /etc/cron.d/backup_redmine-cron
 RUN chmod 777 /etc/cron.d/backup_redmine-cron
