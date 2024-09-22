@@ -29,6 +29,19 @@ service mysql start
 bundle exec rake redmine:plugins NAME=redmine_contacts RAILS_ENV=production
 service mysql stop
 
-# 5.0 next plugin...
+# 5.0 Do the Resubmission plugin (so you can pull back in tasks after some time)
+cd /usr/share/redmine/plugins
+git clone https://github.com/HugoHasenbein/redmine_auto_resubmission.git
+cd /usr/share/redmine
+bundle install
+
+# 6.0 Do the PDF (and other plugins) plugin
+cd /usr/share/redmine/plugins
+git clone https://github.com/HugoHasenbein/redmine_more_previews.git
+cd /usr/share/redmine
+bundle install
+
+# 7.0 next plugin
+#
 
 
